@@ -1,0 +1,34 @@
+List Athlete Activities:
+    Type: GET
+    URL: "https://www.strava.com/api/v3/athlete/activities?
+    Params:
+        before=
+        after=
+        page=
+        per_page=
+
+    Body:
+        Authorization:
+            Bearer [[token]]
+    Returns:
+        HTTP code 200:
+            An array
+        HTTP code 4xx, 5xx:
+            A fault describing the reason for the error
+
+Update Activity:
+    Type: PUT
+    URL: "https://www.strava.com/api/v3/activities/
+    Params:
+        id=
+    Body:
+        <Parameter Name>:
+            An instance of UpdatableActivity (https://developers.strava.com/docs/reference/#api-models-UpdatableActivity)
+        Authorization:
+            Bearer [[token]]
+    Returns:
+        HTTP code 200:
+            The activity's detailed representation. An instance of DetailedActivity (https://developers.strava.com/docs/reference/#api-models-DetailedActivity)
+        HTTP code 4xx, 5xx:
+            A fault describing the reason for the error
+
