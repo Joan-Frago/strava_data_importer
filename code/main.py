@@ -91,7 +91,9 @@ def update_activity(iAct):
     iUrl=iUrl.format(id=iUpdAct.id)
     iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
     iData=iUpdAct.json()
-
+    
+    print(iData)
+    
     pyutils.putJsonData(aUrl=iUrl,aHeaders=iHeaders,aData=iData)
 
 if __name__=="__main__":

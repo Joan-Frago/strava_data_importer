@@ -1,4 +1,5 @@
 import sys
+from pyutils import dict2json
 
 class UpdatableActivity:
     def __init__(self,aActivity:dict):
@@ -12,7 +13,6 @@ class UpdatableActivity:
         self.hide_from_home=False
         self.description=""
         self.name=self.iAct["name"]
-        self.type=self.iAct["type"]
         self.sport_type=self.iAct["sport_type"]
         self.gear_id=self.iAct["gear_id"]
     def json(self):
@@ -24,7 +24,6 @@ class UpdatableActivity:
             hide_from_home
             description
             name
-            type
             sport_type:
                 instance of sporttype
             gear_id
@@ -37,11 +36,11 @@ class UpdatableActivity:
             iDic["hide_from_home"]=self.hide_from_home
             iDic["description"]=self.description
             iDic["name"]=self.name
-            iDic["type"]=self.type
             iDic["sport_type"]=self.sport_type
             iDic["gear_id"]=self.gear_id
         
-            return iDic
+            iJson=dict2json(iDic)
+            return iJson
         except Exception as e:
             err="Error in UpdatableActivity.json function. Error: "
             err+=str(e)+" : "+str(sys.exc_info())
@@ -67,9 +66,9 @@ def set_new_description(aAct:UpdatableActivity,aAthleteInfo:dict):
     iDic["elevation_gain"]=formatNumber(aAthleteInfo[iKey]["elevation_gain"])
 
     iDesc="Year Totals"
-    iDesc+="\n  Distance: {dst} km".format(dst=iDic["distance"])
-    iDesc+="\n  Time: {tm} h".format(tm=iDic["elapsed_time"])
-    iDesc+="\n  Elevation Gain: {eg} m".format(eg=iDic["elevation_gain"])
+    iDesc+="\n    Distance: {dst} km".format(dst=iDic["distance"])
+    iDesc+="\n    Time: {tm} h".format(tm=iDic["elapsed_time"])
+    iDesc+="\n    Elevation Gain: {eg} m".format(eg=iDic["elevation_gain"])
     iDesc+="\n\nPowerd by My App"
     iDesc+="\nhttps://github.com/Joan-Frago/strava_data_importer"
     
