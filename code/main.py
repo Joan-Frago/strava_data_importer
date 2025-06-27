@@ -33,7 +33,6 @@ def get_last_activity() -> list:
     month=before_date.month
     day=before_date.day
     after=pyutils.GetEpochTimestamp(aDate=(year,month,day,0,0,0))
-    # have to fix the above line to set after to the actual day at 00:00
 
     page=1
     per_page=30
@@ -41,6 +40,7 @@ def get_last_activity() -> list:
     iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
 
     iRet=pyutils.getJsonData(aUrl=iUrl,aParams=iParams,aHeaders=iHeaders)
+
     return iRet
 
 def refresh_token():
@@ -69,17 +69,8 @@ def update_activity(iAct):
     iUpdAct=UpdatableActivity(iAct)
 
     # Get relevant athlete info
-    
-    iUrl="https://www.strava.com/api/v3/athlete"
-    iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
-    iRet=pyutils.getJsonData(aUrl=iUrl,aHeaders=iHeaders)
-
-    iAthId=iRet.get("id",None)
-    if iAthId is None:
-        raise Exception("Could not get athlete id. Error fetching resource")
-
     iUrl="https://www.strava.com/api/v3/athletes/{id}/stats"
-    iUrl=iUrl.format(id=iAthId)
+    iUrl=iUrl.format(id=iUpdAct.athlete_id)
     iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
     iRet=pyutils.getJsonData(aUrl=iUrl,aHeaders=iHeaders)
     
@@ -91,8 +82,6 @@ def update_activity(iAct):
     iUrl=iUrl.format(id=iUpdAct.id)
     iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
     iData=iUpdAct.json()
-    
-    print(iData)
     
     pyutils.putJsonData(aUrl=iUrl,aHeaders=iHeaders,aData=iData)
 

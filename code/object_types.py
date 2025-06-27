@@ -15,6 +15,9 @@ class UpdatableActivity:
         self.name=self.iAct["name"]
         self.sport_type=self.iAct["sport_type"]
         self.gear_id=self.iAct["gear_id"]
+        
+        # The following attributes are not meant to be included in the json
+        self.athlete_id=self.iAct["athlete"]["id"]
     def json(self):
         """
         contains:
