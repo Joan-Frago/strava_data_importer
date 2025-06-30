@@ -91,6 +91,7 @@ if __name__=="__main__":
     refresh_token()
     iLastAct=get_last_activity()
     
+    if iLastAct==[]: sys.exit() # break execution if there are no activities
     for i in iLastAct:
         update_activity(i)
 
