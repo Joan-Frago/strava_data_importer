@@ -2,3 +2,5 @@
 config/secret/
 
 *__pycache__/
+
+log/

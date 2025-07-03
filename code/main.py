@@ -6,6 +6,8 @@ from object_types import UpdatableActivity,set_new_description
 
 iJsonFile="/opt/strava_data_importer/config/secret/secret.json"
 
+_logger=pyutils.Logger(log_path="/opt/strava_data_importer/log/strava.log")
+
 def get_secrets_config():
     global json_data
     global iClientId
@@ -32,7 +34,7 @@ def get_last_activity() -> list:
     year=before_date.year
     month=before_date.month
     day=before_date.day
-    after=pyutils.GetEpochTimestamp(aDate=(year,month,day,0,0,0))
+    after=pyutils.GetEpochTimestamp(aDate=(2025,6,29,0,0,0))
 
     page=1
     per_page=30
@@ -52,7 +54,13 @@ def refresh_token():
         "grant_type":"refresh_token",
         "refresh_token":iRefreshToken
     }
+    
     iRet=pyutils.postJsonData(aUrl=iUrl,aData=iData)
+    
+    # If there is no info about the scope, the user needs to reauthorize
+    if iRet.get("scope",None)==None:
+        _logger.info("User needs to reauthorize")
+
     iNewAccessToken=iRet["access_token"]
 
     # update config json
@@ -83,7 +91,8 @@ def update_activity(iAct):
     iHeaders={"Authorization":"Bearer "+str(iAccessToken)}
     iData=iUpdAct.json()
     
-    pyutils.putJsonData(aUrl=iUrl,aHeaders=iHeaders,aData=iData)
+    iRet=pyutils.putJsonData(aUrl=iUrl,aHeaders=iHeaders,aData=iData)
+    _logger.debug(pyutils.dict2json(iRet))
 
 if __name__=="__main__":
     get_secrets_config()

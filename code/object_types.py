@@ -69,9 +69,9 @@ def set_new_description(aAct:UpdatableActivity,aAthleteInfo:dict):
     iDic["elevation_gain"]=formatNumber(aAthleteInfo[iKey]["elevation_gain"])
 
     iDesc="Year Totals"
-    iDesc+="\n    Distance: {dst} km".format(dst=iDic["distance"])
-    iDesc+="\n    Time: {tm} h".format(tm=iDic["elapsed_time"])
-    iDesc+="\n    Elevation Gain: {eg} m".format(eg=iDic["elevation_gain"])
+    iDesc+="\n  Distance: {dst} km".format(dst=iDic["distance"])
+    iDesc+="\n  Time: {tm} h".format(tm=iDic["elapsed_time"])
+    iDesc+="\n  Elevation Gain: {eg} m".format(eg=iDic["elevation_gain"])
     iDesc+="\n\nPowerd by My App"
     iDesc+="\nhttps://github.com/Joan-Frago/strava_data_importer"
     
